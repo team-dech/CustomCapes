@@ -8,12 +8,15 @@ public class CCClientHandler
     
     public static void refreshCape(String name, String url)
     {
-        // TODO Auto-generated method stub
+        capes.put(name, url);
     }
 
     public static void getAllCapes(String[] names, String[] urls)
     {
-        // TODO Auto-generated method stub
+        for (int i = 0; i < names.length; i++)
+        {
+            capes.put(names[i], urls[i]);
+        }
     }
 
     public static void updateCapes()
