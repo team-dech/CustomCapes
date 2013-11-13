@@ -39,16 +39,18 @@ public class CCCommandHandler extends CommandBase
                     CCServerHandler.capes.put(player.username, "");
                     CCServerHandler.refreshCape(player.username);
                 }
-                else if (args.length == 2) // clear [player] / set <URL>
-                {
-                    String arg1 = args[0], arg2 = args[1];
-                    
-                    if (arg1.equals("clear"))
+                else if (args.length == 2)
+                {                    
+                    if (args[0].equals("clear"))
                     {
-                        CCServerHandler.capes.put(args[1], "");
-                        CCServerHandler.refreshCape(args[1]);
+                        if (CCServerHandler.doesPlayerExist(args[1]))
+                        {
+                            CCServerHandler.capes.put(args[1], "");
+                            CCServerHandler.refreshCape(args[1]);
+                        }
+                        else sender.sendChatToPlayer(ChatMessageComponent.createFromText("Couldn't find player " + args[1]));
                     }
-                    else if (arg1.equals("set"))
+                    else if (args[0].equals("set"))
                     {
                         CCServerHandler.capes.put(player.username, args[1]);
                         CCServerHandler.refreshCape(player.username);
@@ -60,17 +62,19 @@ public class CCCommandHandler extends CommandBase
                 }
                 else if (args.length == 3)
                 {
-                    String arg1 = args[0], arg2 = args[1], arg3 = args[2];
-                    
-                    if (arg1.equals("set"))
-                    {   
-                        CCServerHandler.capes.put(args[2], args[1]);
-                        CCServerHandler.refreshCape(args[2]);
-                    }
-                    else
+                    if (CCServerHandler.doesPlayerExist(args[2]))
                     {
-                        sendUsage(sender);
+                        if (args[0].equals("set"))
+                        {
+                            CCServerHandler.capes.put(args[2], args[1]);
+                            CCServerHandler.refreshCape(args[2]);
+                        }
+                        else
+                        {
+                            sendUsage(sender);
+                        }
                     }
+                    else sender.sendChatToPlayer(ChatMessageComponent.createFromText("Couldn't find player " + args[2]));
                 }
                 else
                 {
